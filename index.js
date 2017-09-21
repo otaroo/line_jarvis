@@ -7,7 +7,7 @@ const config = {
   channelSecret: process.env.CHANNEL_SECRET,
 };
 
-const client = new line.Client(config);
+
 
 app.set('port', (process.env.PORT || 5000));
 
