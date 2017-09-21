@@ -24,17 +24,26 @@ app.set('port', (process.env.PORT || 5000));
 //   return client.replyMessage(event.replyToken, echo);
 // }
 app.post('/webhook', (req, res) => {
+  req.body.events.map(handleEvent)
   res.sendStatus(200)
-  var text = req.body.events[0].message.text
-  var sender = req.body.events[0].source.userId
-  var replyToken = req.body.events[0].replyToken
-  sendText(sender, text)
+  
   
 })
 app.get('/', (req, res) => {
   res.send('OK /webhook');
 });
+function handleEvent(event) {
+  if (event.type !== 'message' || event.message.type !== 'text') {
+    // ignore non-text-message event
+    return Promise.resolve(null);
+  }
 
+  // create a echoing text message
+  const echo = { type: 'text', text: event.message.text };
+
+  // use reply API
+  return client.replyMessage(event.replyToken, echo);
+}
 function sendText (sender, text) {
   let data = {
     to: sender,
