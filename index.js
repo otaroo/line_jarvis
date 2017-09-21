@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 const line = require('@line/bot-sdk');
-
+var bodyParser = require('body-parser');
+var request = require('request')
 const config = {
   channelAccessToken: 'Yfp4E1/cS+OUoQOVVHc2/uLctihQ5gHv9o5rPRMLp0drPl0ObyZwI8uYQjm/VozeGloTmKsOnpdNdwmUrJTw91JQX3LJG3bVSpRFe/q++N0p0ZuTsLoksNRK6TBkmR4+KIgNplG7sib3btmH6nYuowdB04t89/1O/w1cDnyilFU=',
   channelSecret: '0da330ec4b770054c765bbe26205bf62',
@@ -10,7 +11,8 @@ const config = {
 const client = new line.Client(config);
 
 app.set('port', (process.env.PORT || 5000));
-
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 // app.post('/webhook', line.middleware(config), (req, res) => {
 //   Promise
 //     .all(req.body.events.map(handleEvent))
@@ -24,7 +26,15 @@ app.set('port', (process.env.PORT || 5000));
 //   return client.replyMessage(event.replyToken, echo);
 // }
 app.post('/webhook', (req, res) => {
-  req.body.events.map(handleEvent)
+  var text = req.body.events[0].message.text
+  var sender = req.body.events[0].source.userId
+  var replyToken = req.body.events[0].replyToken
+  console.log(text, sender, replyToken)
+  console.log(typeof sender, typeof text)
+  // console.log(req.body.events[0])
+  if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
+    sendText(sender, text)
+  }
   res.sendStatus(200)
   
   
