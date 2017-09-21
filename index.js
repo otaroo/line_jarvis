@@ -7,7 +7,7 @@ var config = {
   channelSecret: '0da330ec4b770054c765bbe26205bf62',
 };
 
-var client = new line.Client(config);
+//var client = new line.Client(config);
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -18,7 +18,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
-  //response.render('pages/index');
+  response.send('OK');
 });
 
 app.listen(app.get('port'), function() {
