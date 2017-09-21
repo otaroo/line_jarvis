@@ -11,19 +11,21 @@ const client = new line.Client(config);
 
 app.set('port', (process.env.PORT || 5000));
 
-app.post('/webhook', line.middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result));
-});
-function handleEvent(event) {
-  if (event.type !== 'message' || event.message.type !== 'text') {
-    return Promise.resolve(null);
-  }
-  const echo = { type: 'text', text: event.message.text };
-  return client.replyMessage(event.replyToken, echo);
-}
-
+// app.post('/webhook', line.middleware(config), (req, res) => {
+//   Promise
+//     .all(req.body.events.map(handleEvent))
+//     .then((result) => res.json(result));
+// });
+// function handleEvent(event) {
+//   if (event.type !== 'message' || event.message.type !== 'text') {
+//     return Promise.resolve(null);
+//   }
+//   const echo = { type: 'text', text: event.message.text };
+//   return client.replyMessage(event.replyToken, echo);
+// }
+app.post('/webhook', (req, res) => {
+  res.sendStatus(200)
+})
 app.get('/', (req, res) => {
   res.send('OK /webhook');
 });
