@@ -11,14 +11,14 @@ const client = new line.Client(config);
 
 app.set('port', (process.env.PORT || 5000));
 
-app.use(express.static(__dirname + '/public'));
+app.post('/webhook', line.middleware(config), (req, res) => {
+  Promise
+    .all(req.body.events.map(handleEvent))
+    .then((result) => res.json(result));
+});
 
-// views is directory for all template files
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-
-app.get('/', function(request, response) {
-  response.send('OK');
+app.get('/', (req, res) => {
+  res.send('OK /webhook');
 });
 
 app.listen(app.get('port'), function() {
