@@ -26,17 +26,19 @@ app.use(bodyParser.json())
 //   return client.replyMessage(event.replyToken, echo);
 // }
 app.post('/webhook', (req, res) => {
-  var text = req.body.events[0].message.text
-  var sender = req.body.events[0].source.userId
-  var replyToken = req.body.events[0].replyToken
-  console.log(text, sender, replyToken)
-  console.log(typeof sender, typeof text)
-  // console.log(req.body.events[0])
-  if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
-    sendText(sender, text)
-  }
-  res.sendStatus(200)
-  
+  // var text = req.body.events[0].message.text
+  // var sender = req.body.events[0].source.userId
+  // var replyToken = req.body.events[0].replyToken
+  // console.log(text, sender, replyToken)
+  // console.log(typeof sender, typeof text)
+  // // console.log(req.body.events[0])
+  // if (text === 'สวัสดี' || text === 'Hello' || text === 'hello') {
+  //   sendText(sender, text)
+  // }
+  // res.sendStatus(200)
+  Promise
+  .all(req.body.events.map(handleEvent))
+  .then((result) => res.json(result));
   
 })
 app.get('/', (req, res) => {
