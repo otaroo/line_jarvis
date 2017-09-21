@@ -1,13 +1,13 @@
 var express = require('express');
 var app = express();
-var line = require('@line/bot-sdk');
+const line = require('@line/bot-sdk');
 
-var config = {
+const config = {
   channelAccessToken: 'Yfp4E1/cS+OUoQOVVHc2/uLctihQ5gHv9o5rPRMLp0drPl0ObyZwI8uYQjm/VozeGloTmKsOnpdNdwmUrJTw91JQX3LJG3bVSpRFe/q++N0p0ZuTsLoksNRK6TBkmR4+KIgNplG7sib3btmH6nYuowdB04t89/1O/w1cDnyilFU=',
   channelSecret: '0da330ec4b770054c765bbe26205bf62',
 };
 
-//var client = new line.Client(config);
+const client = new line.Client(config);
 
 app.set('port', (process.env.PORT || 5000));
 
