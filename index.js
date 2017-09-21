@@ -24,11 +24,12 @@ app.set('port', (process.env.PORT || 5000));
 //   return client.replyMessage(event.replyToken, echo);
 // }
 app.post('/webhook', (req, res) => {
+  res.sendStatus(200)
   var text = req.body.events[0].message.text
   var sender = req.body.events[0].source.userId
   var replyToken = req.body.events[0].replyToken
   sendText(sender, text)
-  res.sendStatus(200)
+  
 })
 app.get('/', (req, res) => {
   res.send('OK /webhook');
